@@ -21,7 +21,7 @@ public class AlertMessageController {
         AlertMessageResponse response = new AlertMessageResponse();
         List<AlertMessage> alertMessages = new ArrayList<>();
         AlertMessage alert1 = new AlertMessage();
-
+        alert1.setAlertImage(null);
         alert1.setStartDateValidity(new Date());
         alert1.setMessageCategory("anniversaire");
         alert1.setMessage("Bonne fête à toutes les mamans de la terre spécialement les mamans HAÏTIENNES.");

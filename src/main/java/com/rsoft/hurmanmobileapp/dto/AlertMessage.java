@@ -11,6 +11,14 @@ public class AlertMessage implements Serializable {
     private Date startDateValidity;
     private Date endDateValidity;
     private String status;
+    private String alertImage;
+    public String getAlertImage() {
+        return alertImage;
+    }
+
+    public void setAlertImage(String alertImage) {
+        this.alertImage = alertImage;
+    }
 
     public String getMessageCategory() {
         return messageCategory;
