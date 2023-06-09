@@ -3,7 +3,7 @@ package com.rsoft.hurmanmobileapp.dto;
 import java.io.Serializable;
 import java.util.Date;
 
-public class AlertMessage implements Serializable {
+public class GetAlertMessage implements Serializable {
     private String messageCode;
     private String messageCategory;
     private String messageType;

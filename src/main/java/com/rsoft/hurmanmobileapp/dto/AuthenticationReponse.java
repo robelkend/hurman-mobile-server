@@ -2,13 +2,31 @@ package com.rsoft.hurmanmobileapp.dto;
 
 import java.util.Date;
 
-public class AuthenticationReponse extends ReponseBase{
+public class AuthenticationReponse extends ReponseBase {
+    private String codeEmploye;
     private String firstName;
     private String lastName;
     private Date currentAccessTime;
     private Date lastAccessTime;
     private String language;
     private String enterpriseName;
+    private String photo;
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
+
+    public String getCodeEmploye() {
+        return codeEmploye;
+    }
+
+    public void setCodeEmploye(String codeEmploye) {
+        this.codeEmploye = codeEmploye;
+    }
 
     public String getFirstName() {
         return firstName;

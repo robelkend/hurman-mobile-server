@@ -1,6 +1,6 @@
 package com.rsoft.hurmanmobileapp.dto;
 
-public class AlertMessageRequest extends RequestBase {
+public class GetCalendarRequest {
     private String codeEmploye;
 
     public String getCodeEmploye() {
