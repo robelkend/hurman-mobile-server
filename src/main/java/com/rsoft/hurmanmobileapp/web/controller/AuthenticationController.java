@@ -16,7 +16,7 @@ import java.util.Random;
 @RestController
 @RequestMapping(value = "/v1/mobile")
 public class AuthenticationController {
-    @RequestMapping(value = "/Authenticate", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/v1/mobile/Authenticate", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public AuthenticationReponse authenticate(AuthenticationRequest authenticationRequest) throws JAXBException {
         int r = new Random().nextInt(12);
         AuthenticationReponse reponse = new AuthenticationReponse();
