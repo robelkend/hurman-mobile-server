@@ -14,6 +14,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @FeignClient(name = "api-gateway-server", configuration = FeignSimpleEncoderConfig.class)
@@ -26,4 +27,12 @@ public abstract interface DefaultProxy {
     })
 
     public List<AlertMessage> getAlertMessages(RequestAttributes requestAttributes);
+
+    @RequestMapping(value = "/hurman-server/PersistAlertMessages", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @Headers({
+            "Accept: application/json",
+            "Content-Type: application/json"
+    })
+
+    public ArrayList<AlertMessage> persistAlertMessages(RequestAttributes requestAttributes);
 }
