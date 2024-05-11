@@ -1,10 +1,14 @@
 package com.rsoft.hurmanmobileapp.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 
 public class SendMessageRequest extends RequestBase{
     private String codeEmploye;
+    @JsonFormat(pattern="dd/MM/yyyy")
     private Date beginDate;
+    @JsonFormat(pattern="dd/MM/yyyy")
     private Date endDate;
     private String message;
     private String type;

@@ -50,4 +50,6 @@ public class Position implements Serializable {
     public void setSalaryBase(String salaryBase) {
         this.salaryBase = salaryBase;
     }
+
+
 }

@@ -18,7 +18,7 @@ import java.util.List;
 
 
 @Service
-public class AlertMessageService {
+public class VacationService {
 
     @Autowired
     private DefaultProxy proxy;

@@ -16,6 +16,15 @@ public class Solde implements Serializable {
     private String status;
     private String message;
     private String label;
+    private String currency;
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
+    }
 
     public String getLabel() {
         return label;
