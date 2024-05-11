@@ -3,19 +3,26 @@ package com.rsoft.hurmanmobileapp;
 import jakarta.annotation.PostConstruct;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
-import java.util.Random;
 import java.util.TimeZone;
 
 @EnableFeignClients({"com.rsoft.hurmanmobileapp"})
+//@ComponentScan(basePackages = {"com.rsoft.hurmanmobileapp.component"})
+//@ComponentScan("com.rsoft.hurmanmobileapp.component")
 @SpringBootApplication
 @EnableConfigurationProperties
 @EnableDiscoveryClient
 @EnableAsync
+@EnableCaching
+@EnableScheduling
 public class HurmanMobileAppApplication {
 
     public static void main(String[] args) {

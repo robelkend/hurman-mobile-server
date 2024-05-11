@@ -1,21 +1,36 @@
 package com.rsoft.hurmanmobileapp.web.controller;
 
 import com.rsoft.hurmanmobileapp.dto.*;
-import com.rsoft.lib.Utilities;
+import com.rsoft.hurmanmobileapp.service.AlertMessageService;
+import io.lettuce.core.RedisCommandTimeoutException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.QueryTimeoutException;
+import org.springframework.data.redis.RedisConnectionFailureException;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
 import javax.xml.bind.JAXBException;
-import java.util.Calendar;
 import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 @RequestMapping(value = "/v1/mobile")
 public class AlertMessageController {
+    @Autowired
+    private AlertMessageService alertMessageService;
+
     @RequestMapping(value = "/GetAlerts", method = RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public GetAlertMessageResponse authenticate(AlertMessageRequest authenticationRequest) throws JAXBException {
+    public GetAlertMessageResponse getAlertMessages(AlertMessageRequest authenticationRequest) throws JAXBException {
+        GetAlertMessageResponse r = new GetAlertMessageResponse();
+        try {
+            r = alertMessageService.getAlertMessages(authenticationRequest);
+        } catch (RedisConnectionFailureException | QueryTimeoutException e) {
+            r = alertMessageService.getAlertMessagesFromService(authenticationRequest);
+        }
+        return r;
+        /*
         GetAlertMessageResponse response = new GetAlertMessageResponse();
         response.setErrorCode("000");
         List<GetAlertMessage> alertMessages = new ArrayList<>();
@@ -51,6 +66,7 @@ public class AlertMessageController {
         alertMessages.add(alert4);
         response.setAlertMessages(alertMessages);
         return response;
+        */
     }
 
     @RequestMapping(value = "/SendMessage", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
