@@ -1,6 +1,6 @@
 package com.rsoft.hurmanmobileapp.dto;
 
-public class GetPayRequest extends RequestBase{
+public class GetPayRequest extends RequestBase {
     private String codeEmploye;
     private String month;
     private String year;

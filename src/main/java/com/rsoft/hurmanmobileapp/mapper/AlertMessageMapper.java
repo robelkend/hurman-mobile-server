@@ -4,6 +4,9 @@ import com.rsoft.hurmanmobileapp.dto.GetAlertMessage;
 import com.rsoft.lib.model.AlertMessage;
 
 public class AlertMessageMapper {
+    private AlertMessageMapper() {
+
+    }
 
     public static GetAlertMessage alertMessageToDTO(AlertMessage alertMessage) {
         GetAlertMessage message = new GetAlertMessage();

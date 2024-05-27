@@ -131,6 +131,7 @@ public class AlertMessageService {
                 TypeConge typeConge = proxy.getTypeCongeEmploye(ra);
                 if (typeConge != null && typeConge.getErrorCode() == null) {
                     c.setCongeId(typeConge.getCongeId());
+                    c.setCongePaye("Y");
                 } else {
                     if (typeConge != null) {
                         r.setErrorCode(typeConge.getErrorCode());

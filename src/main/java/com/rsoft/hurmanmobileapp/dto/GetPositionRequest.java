@@ -1,6 +1,6 @@
 package com.rsoft.hurmanmobileapp.dto;
 
-public class GetPositionRequest extends RequestBase{
+public class GetPositionRequest extends RequestBase {
     private String codeEmploye;
 
     public String getCodeEmploye() {

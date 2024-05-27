@@ -4,6 +4,8 @@ import com.rsoft.hurmanmobileapp.dto.Solde;
 import com.rsoft.lib.model.Pret;
 
 public class PretMapper {
+    private PretMapper() {
+    }
 
     public static Solde salaireEmployeToDTO(Pret pret) {
         Solde solde = new Solde();

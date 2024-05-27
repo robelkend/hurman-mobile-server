@@ -1,9 +1,8 @@
 package com.rsoft.hurmanmobileapp.dto;
 
-public class AuthenticationRequest extends RequestBase {
+public class LogoutRequest extends RequestBase{
     private String enterprise;
     private String userId;
-    private String password;
 
     public String getEnterprise() {
         return enterprise;
@@ -19,13 +18,5 @@ public class AuthenticationRequest extends RequestBase {
 
     public void setUserId(String userId) {
         this.userId = userId;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 }

@@ -45,7 +45,7 @@ class AlertMessageServiceTest {
         a.setErrorCode("0001");
         alertMessages.add(a);
         alertMessageRequest.setCodeEmploye("000111");
-        Mockito.doReturn(alertMessages).when(defaultProxy).getAlertMessages(any());
+        Mockito.doReturn(alertMessages).when(defaultProxy).getNotificationAlerts(any());
         //Act
         GetAlertMessageResponse getAlertMessageResponse = alertMessageService.getAlertMessagesFromService(alertMessageRequest);
         //Assert
@@ -68,7 +68,7 @@ class AlertMessageServiceTest {
         a2.setDescription("Un conge");
         alertMessages.add(a2);
         alertMessageRequest.setCodeEmploye("000111");
-        Mockito.doReturn(alertMessages).when(defaultProxy).getAlertMessages(any());
+        Mockito.doReturn(alertMessages).when(defaultProxy).getNotificationAlerts(any());
         //Act
         GetAlertMessageResponse getAlertMessageResponse = alertMessageService.getAlertMessagesFromService(alertMessageRequest);
         //Assert

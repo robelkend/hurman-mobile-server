@@ -8,6 +8,9 @@ public class Schedule implements Serializable {
     private Date dateOfDay;
     private String beginHour;
     private String endHour;
+    private Date presenceDepartureDate;
+    private String presenceBeginHour;
+    private String presenceEndHour;
 
     public List<String> getTaskList() {
         return taskList;
@@ -40,5 +43,29 @@ public class Schedule implements Serializable {
 
     public void setEndHour(String endHour) {
         this.endHour = endHour;
+    }
+
+    public Date getPresenceDepartureDate() {
+        return presenceDepartureDate;
+    }
+
+    public void setPresenceDepartureDate(Date presenceDepartureDate) {
+        this.presenceDepartureDate = presenceDepartureDate;
+    }
+
+    public String getPresenceBeginHour() {
+        return presenceBeginHour;
+    }
+
+    public void setPresenceBeginHour(String presenceBeginHour) {
+        this.presenceBeginHour = presenceBeginHour;
+    }
+
+    public String getPresenceEndHour() {
+        return presenceEndHour;
+    }
+
+    public void setPresenceEndHour(String presenceEndHour) {
+        this.presenceEndHour = presenceEndHour;
     }
 }

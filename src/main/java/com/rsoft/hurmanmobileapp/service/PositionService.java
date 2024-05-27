@@ -45,7 +45,6 @@ public class PositionService {
                 r.setErrorMessage(m1.getErrorMessage());
             } else {
                 for (SalaireEmploye m : salaireEmployes) {
-
                     RequestAttributes ra = new RequestAttributes();
                     ra.setScreen(Utilities.SUPER_SCREEN);
                     ra.setAgent(getPositionRequest.getCodeEmploye());

@@ -6,6 +6,8 @@ import com.rsoft.lib.model.SalaireEmploye;
 import java.math.BigDecimal;
 
 public class SalaireEmployeMapper {
+    private SalaireEmployeMapper() {
+    }
 
     public static Position salaireEmployeToDTO(SalaireEmploye salaireEmploye, String poste) {
         Position position = new Position();
