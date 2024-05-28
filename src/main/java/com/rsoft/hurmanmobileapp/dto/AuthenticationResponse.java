@@ -2,7 +2,7 @@ package com.rsoft.hurmanmobileapp.dto;
 
 import java.util.Date;
 
-public class AuthenticationReponse extends ReponseBase {
+public class AuthenticationResponse extends ReponseBase {
     private String codeEmploye;
     private String firstName;
     private String lastName;
@@ -11,7 +11,7 @@ public class AuthenticationReponse extends ReponseBase {
     private String language;
     private String enterpriseName;
     private String photo;
-
+    private String jwt;
     public String getPhoto() {
         return photo;
     }
@@ -74,5 +74,13 @@ public class AuthenticationReponse extends ReponseBase {
 
     public void setEnterpriseName(String enterpriseName) {
         this.enterpriseName = enterpriseName;
+    }
+
+    public String getJwt() {
+        return jwt;
+    }
+
+    public void setJwt(String jwt) {
+        this.jwt = jwt;
     }
 }

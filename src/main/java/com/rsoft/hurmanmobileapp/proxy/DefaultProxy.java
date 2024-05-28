@@ -144,6 +144,14 @@ public abstract interface DefaultProxy {
     })
     public abstract AuthenticationDto authenticate(@RequestBody RequestAttributes requestAttribute);
 
+    @RequestMapping(value = "/rsoft-security/LoadUserProfiles", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @Headers({
+            "Accept: application/json",
+            "Content-Type: application/json"
+    })
+    public abstract UserProfile loadUserProfiles(@RequestBody RequestAttributes requestAttribute);
+
+
     @RequestMapping(value = "/rsoft-security/Logout", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @Headers({
             "Accept: application/json",

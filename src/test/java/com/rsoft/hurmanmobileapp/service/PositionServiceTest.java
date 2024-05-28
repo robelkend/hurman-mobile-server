@@ -41,29 +41,29 @@ class PositionServiceTest {
 
     }
 
-    @Test
-    void getPositionFromService_succes() {
-        // Get the current date
-        Calendar calendar = Calendar.getInstance();
-
-        // Set the calendar to the first day of the week
-        calendar.set(Calendar.DAY_OF_WEEK, calendar.getFirstDayOfWeek());
-        Date firstDayOfWeek = calendar.getTime();
-        System.out.println("First Day of Week: " + firstDayOfWeek);
-
-        // Set the calendar to the last day of the week
-        calendar.add(Calendar.DAY_OF_WEEK, 6);
-        Date lastDayOfWeek = calendar.getTime();
-        System.out.println("Last Day of Week: " + lastDayOfWeek);
-
-        //Arrange
-//        GetPositionRequest getPositionRequest =  J_FIXTURE.create(GetPositionRequest.class);
-//        getPositionRequest.setCodeEmploye("000121");
-//        Mockito.doReturn(List.of(salaireEmploye)).when(defaultProxy).getSalaireEmployes(any());
-        //Act
-//        GetPositionResponse getPositionResponse = positionService.getPositionFromService(getPositionRequest);
-        //Assert
-    }
+//    @Test
+//    void getPositionFromService_succes() {
+//        // Get the current date
+//        Calendar calendar = Calendar.getInstance();
+//
+//        // Set the calendar to the first day of the week
+//        calendar.set(Calendar.DAY_OF_WEEK, calendar.getFirstDayOfWeek());
+//        Date firstDayOfWeek = calendar.getTime();
+//        System.out.println("First Day of Week: " + firstDayOfWeek);
+//
+//        // Set the calendar to the last day of the week
+//        calendar.add(Calendar.DAY_OF_WEEK, 6);
+//        Date lastDayOfWeek = calendar.getTime();
+//        System.out.println("Last Day of Week: " + lastDayOfWeek);
+//
+//        //Arrange
+////        GetPositionRequest getPositionRequest =  J_FIXTURE.create(GetPositionRequest.class);
+////        getPositionRequest.setCodeEmploye("000121");
+////        Mockito.doReturn(List.of(salaireEmploye)).when(defaultProxy).getSalaireEmployes(any());
+//        //Act
+////        GetPositionResponse getPositionResponse = positionService.getPositionFromService(getPositionRequest);
+//        //Assert
+//    }
 //
 //    private static final Dispatcher dispatcher = new Dispatcher() {
 //        @NotNull
