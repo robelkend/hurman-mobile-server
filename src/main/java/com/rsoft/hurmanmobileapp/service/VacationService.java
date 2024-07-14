@@ -37,13 +37,14 @@ public class VacationService {
         requestAttributes.setOrderFields(orderFields);
         List<Conge> conges = proxy.getConges(requestAttributes);
         List<Vacation> vacationList = new ArrayList<>();
-        r.setErrorCode("000");
+        r.setError("000");
         if (!CollectionUtils.isEmpty(conges)) {
             Conge m1 = conges.get(0);
             if (!StringUtils.isEmpty(m1.getErrorCode())) {
-                r.setErrorCode(m1.getErrorCode());
-                r.setErrorMessage(m1.getErrorMessage());
+                r.setError(m1.getErrorCode());
+                r.setMessage(m1.getErrorMessage());
             } else {
+
                 for (Conge m : conges) {
                     Vacation vacation = CongeMapper.congeToDTO(m);
                     if (m.getCongeId().startsWith("CA")) {
@@ -101,8 +102,8 @@ public class VacationService {
                     c.setCongePaye("Y");
                 } else {
                     if (typeConge != null) {
-                        r.setErrorCode(typeConge.getErrorCode());
-                        r.setErrorMessage(typeConge.getErrorMessage());
+                        r.setError(typeConge.getErrorCode());
+                        r.setMessage(typeConge.getErrorMessage());
                     }
                     return r;
                 }
@@ -114,12 +115,12 @@ public class VacationService {
         requestAttributes.setAgent(vacationRequest.getCodeEmploye());
         requestAttributes.setModels(conges);
         List<Conge> results = proxy.persistConges(requestAttributes);
-        r.setErrorCode("000");
+        r.setError("000");
         if (!CollectionUtils.isEmpty(results)) {
             Conge m1 = results.get(0);
             if (!StringUtils.isEmpty(m1.getErrorCode())) {
-                r.setErrorCode(m1.getErrorCode());
-                r.setErrorMessage(m1.getErrorMessage());
+                r.setError(m1.getErrorCode());
+                r.setMessage(m1.getErrorMessage());
             }
         }
         return r;

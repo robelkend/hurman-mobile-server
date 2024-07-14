@@ -1,17 +1,26 @@
 package com.rsoft.hurmanmobileapp.config;
 
 import feign.auth.BasicAuthRequestInterceptor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class FeignConfig {
-
+    @Value("${api.gateway.url}")
+    private String apiGatewayUrl;
     @Bean
     public BasicAuthRequestInterceptor mBasicAuthRequestInterceptor() {
         return new BasicAuthRequestInterceptor("utilisateur", "mdp");
     }
-
+//    @Bean
+//    public RequestInterceptor requestInterceptor() {
+//        return requestTemplate -> {
+//            String originalUrl = requestTemplate.url();
+//            logger.info("======================================================================Information about the api gatway, url: {}, original url: {} ", apiGatewayUrl, originalUrl);
+//            //requestTemplate.target(apiGatewayUrl);
+//        };
+//    }
 //    @Bean
 //    @Scope("prototype")
 //    @ConditionalOnMissingBean

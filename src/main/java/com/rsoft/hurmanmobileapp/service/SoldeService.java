@@ -40,12 +40,12 @@ public class SoldeService {
         requestAttributes.setOrderFields(orderFields);
         List<Pret> prets = proxy.getPrets(requestAttributes);
         List<Solde> soldes = new ArrayList<>();
-        r.setErrorCode("000");
+        r.setError("000");
         if (!CollectionUtils.isEmpty(prets)) {
             Pret m1 = prets.get(0);
             if (!StringUtils.isEmpty(m1.getErrorCode())) {
-                r.setErrorCode(m1.getErrorCode());
-                r.setErrorMessage(m1.getErrorMessage());
+                r.setError(m1.getErrorCode());
+                r.setMessage(m1.getErrorMessage());
             } else {
                 for (Pret p : prets) {
                     Solde solde = PretMapper.salaireEmployeToDTO(p);

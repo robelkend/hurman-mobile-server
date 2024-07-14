@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import java.util.ArrayList;
 import java.util.List;
 
-@FeignClient(name = "api-gateway-server", configuration = FeignSimpleEncoderConfig.class)
+@FeignClient(name = "api-gateway-server", configuration = FeignSimpleEncoderConfig.class, url = "${api.gateway.url}")
 public abstract interface DefaultProxy {
 
     @RequestMapping(value = "/hurman-server/PersistAlertMessages", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -47,7 +47,6 @@ public abstract interface DefaultProxy {
 
     public TypeConge getTypeCongeEmploye(RequestAttributes requestAttributes);
 
-
     @RequestMapping(value = "/hurman-server/PersistConges", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @Headers({
             "Accept: application/json",
@@ -55,16 +54,6 @@ public abstract interface DefaultProxy {
     })
 
     public ArrayList<Conge> persistConges(RequestAttributes requestAttributes);
-
-
-
-    @RequestMapping(value = "/hurman-server/PersistAbsences", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    @Headers({
-            "Accept: application/json",
-            "Content-Type: application/json"
-    })
-
-    public ArrayList<Absence> persistAbsences(RequestAttributes requestAttributes);
 
     @RequestMapping(value = "/hurman-server/GetPosteEmployes", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @Headers({
@@ -112,7 +101,6 @@ public abstract interface DefaultProxy {
 
     public List<Conge> getConges(RequestAttributes requestAttributes);
 
-
     @RequestMapping(value = "/hurman-server/GetHorairesEmploye", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @Headers({
             "Accept: application/json",
@@ -158,4 +146,25 @@ public abstract interface DefaultProxy {
             "Content-Type: application/json"
     })
     public abstract AuthenticationDto logout(@RequestBody RequestAttributes requestAttribute);
+
+    @RequestMapping(value = "/rsoft-security/PersistUserProfiles", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @Headers({
+            "Accept: application/json",
+            "Content-Type: application/json"
+    })
+    public ArrayList<UserProfile> persistUserProfiles(RequestAttributes requestAttributes);
+
+    @RequestMapping(value = "/hurman-server/GetEmployes", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @Headers({
+            "Accept: application/json",
+            "Content-Type: application/json"
+    })
+    public ArrayList<Employe> getEmployes(@RequestBody(required = false) RequestAttributes<Employe> requestAttribute);
+
+    @RequestMapping(value = "/hurman-server/GetTaches", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @Headers({
+            "Accept: application/json",
+            "Content-Type: application/json"
+    })
+    public ArrayList<Taches> getTaches(RequestAttributes requestAttributes);
 }

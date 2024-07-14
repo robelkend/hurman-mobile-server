@@ -1,6 +1,9 @@
 package com.rsoft.hurmanmobileapp.dto;
 
+import org.apache.commons.lang.StringUtils;
+
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -11,9 +14,20 @@ public class Schedule implements Serializable {
     private Date presenceDepartureDate;
     private String presenceBeginHour;
     private String presenceEndHour;
+    private String nightShiftPlanningBeginHour;
+    private String nightShiftPlanningEndHour;
 
     public List<String> getTaskList() {
         return taskList;
+    }
+
+    public void addTask(String task) {
+        if (!StringUtils.isBlank(task)) {
+            if (taskList == null) {
+                taskList = new ArrayList<>();
+            }
+            taskList.add(task);
+        }
     }
 
     public void setTaskList(List<String> taskList) {
@@ -21,6 +35,7 @@ public class Schedule implements Serializable {
     }
 
     private List<String> taskList;
+
     public Date getDateOfDay() {
         return dateOfDay;
     }
@@ -67,5 +82,21 @@ public class Schedule implements Serializable {
 
     public void setPresenceEndHour(String presenceEndHour) {
         this.presenceEndHour = presenceEndHour;
+    }
+
+    public String getNightShiftPlanningBeginHour() {
+        return nightShiftPlanningBeginHour;
+    }
+
+    public void setNightShiftPlanningBeginHour(String nightShiftPlanningBeginHour) {
+        this.nightShiftPlanningBeginHour = nightShiftPlanningBeginHour;
+    }
+
+    public String getNightShiftPlanningEndHour() {
+        return nightShiftPlanningEndHour;
+    }
+
+    public void setNightShiftPlanningEndHour(String nightShiftPlanningEndHour) {
+        this.nightShiftPlanningEndHour = nightShiftPlanningEndHour;
     }
 }

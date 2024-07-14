@@ -3,22 +3,22 @@ package com.rsoft.hurmanmobileapp.dto;
 import java.io.Serializable;
 
 public class ReponseBase implements Serializable {
-    private String errorCode;
-    private String errorMessage;
+    private String error;
+    private String message;
 
-    public String getErrorCode() {
-        return errorCode;
+    public String getError() {
+        return error;
     }
 
-    public void setErrorCode(String errorCode) {
-        this.errorCode = errorCode;
+    public void setError(String error) {
+        this.error = error;
     }
 
-    public String getErrorMessage() {
-        return errorMessage;
+    public String getMessage() {
+        return message;
     }
 
-    public void setErrorMessage(String errorMessage) {
-        this.errorMessage = errorMessage;
+    public void setMessage(String message) {
+        this.message = message;
     }
 }

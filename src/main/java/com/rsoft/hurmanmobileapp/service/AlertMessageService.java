@@ -13,6 +13,7 @@ import org.springframework.util.StringUtils;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -34,19 +35,22 @@ public class AlertMessageService {
         requestAttributes.setScreen(Utilities.SUPER_SCREEN);
         requestAttributes.setAgent(alertMessageRequest.getCodeEmploye());
         FilterWrapper filterWrapper = new FilterWrapper();
-        filterWrapper.addFilter(new XFilter("eq", "codeEmploye", "string", alertMessageRequest.getCodeEmploye()));
+        //Pas besoin de mettre de date ici, c est   limité  à  3 jours au niveau du serveur et malgré tout on en met, elles ne seront pas prises en compte
         requestAttributes.setFilterWrapper(filterWrapper);
         List<OrderField> orderFields = new ArrayList<>();
         orderFields.add(new OrderField("alertDate", OrderField.ORDER_DIR_DESC));
         requestAttributes.setOrderFields(orderFields);
+        AlertMessage model = new AlertMessage();
+        model.setCodeEmploye(alertMessageRequest.getCodeEmploye());
+        requestAttributes.setModel(model);
         List<AlertMessage> alertMessages = proxy.getNotificationAlerts(requestAttributes);
         List<GetAlertMessage> getAlertMessage = new ArrayList<>();
-        r.setErrorCode("000");
+        r.setError("000");
         if (!CollectionUtils.isEmpty(alertMessages)) {
             AlertMessage m1 = alertMessages.get(0);
             if (!StringUtils.isEmpty(m1.getErrorCode())) {
-                r.setErrorCode(m1.getErrorCode());
-                r.setErrorMessage(m1.getErrorMessage());
+                r.setError(m1.getErrorCode());
+                r.setMessage(m1.getErrorMessage());
             } else {
                 for (AlertMessage m : alertMessages) {
                     GetAlertMessage message = AlertMessageMapper.alertMessageToDTO(m);
@@ -76,7 +80,7 @@ public class AlertMessageService {
                 m.setDescription(alertMessageRequest.getMessage());
                 m.setMessageCode(alertMessageRequest.getType());
                 m.setUserId(alertMessageRequest.getCodeEmploye());
-                m.setCodeEmploye(alertMessageRequest.getCodeEmploye());
+                //m.setCodeEmploye(alertMessageRequest.getCodeEmploye());
                 m.setAgent(alertMessageRequest.getCodeEmploye());
                 m.setAlertDate(new Date());
                 m.setSTATUS(Utilities.STATUS_INSERT);
@@ -84,12 +88,12 @@ public class AlertMessageService {
                 messages.add(m);
                 requestAttributes.setModels(messages);
                 List<AlertMessage> alertMessages = proxy.persistAlertMessages(requestAttributes);
-                r.setErrorCode("000");
+                r.setError("000");
                 if (!CollectionUtils.isEmpty(alertMessages)) {
                     AlertMessage m1 = alertMessages.get(0);
                     if (!StringUtils.isEmpty(m1.getErrorCode())) {
-                        r.setErrorCode(m1.getErrorCode());
-                        r.setErrorMessage(m1.getErrorMessage());
+                        r.setError(m1.getErrorCode());
+                        r.setMessage(m1.getErrorMessage());
                     }
                 }
                 return r;
@@ -134,8 +138,8 @@ public class AlertMessageService {
                     c.setCongePaye("Y");
                 } else {
                     if (typeConge != null) {
-                        r.setErrorCode(typeConge.getErrorCode());
-                        r.setErrorMessage(typeConge.getErrorMessage());
+                        r.setError(typeConge.getErrorCode());
+                        r.setMessage(typeConge.getErrorMessage());
                     }
                     return r;
                 }
@@ -147,12 +151,12 @@ public class AlertMessageService {
         requestAttributes.setAgent(alertMessageRequest.getCodeEmploye());
         requestAttributes.setModels(conges);
         List<Conge> results = proxy.persistConges(requestAttributes);
-        r.setErrorCode("000");
+        r.setError("000");
         if (!CollectionUtils.isEmpty(results)) {
             Conge m1 = results.get(0);
             if (!StringUtils.isEmpty(m1.getErrorCode())) {
-                r.setErrorCode(m1.getErrorCode());
-                r.setErrorMessage(m1.getErrorMessage());
+                r.setError(m1.getErrorCode());
+                r.setMessage(m1.getErrorMessage());
             }
         }
         return r;

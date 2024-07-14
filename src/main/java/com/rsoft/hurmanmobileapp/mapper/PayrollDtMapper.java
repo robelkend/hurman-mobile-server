@@ -27,6 +27,16 @@ public class PayrollDtMapper {
             pay.setOtherFees(payrollDt.getMontantAutreRevenu().add(payrollDt.getMontantFrais()));
             pay.setGrossSalary(getMontantBrut(payrollDt));
             pay.setNetSalary(payrollDt.getSalaireNet());
+            pay.setNbPresences(payrollDt.getNbPresences());
+            pay.setOvertimeVacationSalary(payrollDt.getCongeSupplementaire());
+            pay.setNbOvertimeVacation(payrollDt.getNbCongeSupplementaire());
+            pay.setOvertimeNightSalary(payrollDt.getSoirSupplementaire());
+            pay.setNbOvertimeNight(payrollDt.getNbSoirSupplementaire());
+            pay.setOvertimeOffSalary(payrollDt.getJourOffSupplementaire());
+            pay.setNbOvertimeOff(payrollDt.getNbJourOffSupplementaire());
+            pay.setOvertimeHourSalary(payrollDt.getHeureSupplementaire());
+            pay.setNbOvertimeHour(payrollDt.getNbHeureSupplementaire());
+
             Calendar c1 = new GregorianCalendar();
             c1.setTime(payrollDt.getPayroll().getDatePayroll());
             Utilities.resetCalendarTime(c1);

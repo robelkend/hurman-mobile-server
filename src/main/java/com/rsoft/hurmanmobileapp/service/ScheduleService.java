@@ -13,7 +13,10 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import javax.xml.bind.JAXBException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
 @Service
 public class ScheduleService {
@@ -22,15 +25,19 @@ public class ScheduleService {
 
     public GetCalendarResponse getSchedules(GetCalendarRequest calendarRequest) throws JAXBException {
         GetCalendarResponse response = new GetCalendarResponse();
-        response.setErrorCode("000");
+        response.setError("000");
         //Horaire de la semaine
         Calendar premiereDate = Calendar.getInstance();
+        premiereDate.setTime(calendarRequest.getBeginDate());
         Utilities.resetCalendarTime(premiereDate);
-        premiereDate.set(Calendar.DAY_OF_WEEK, premiereDate.getFirstDayOfWeek());
 
         Calendar derniereDate = Calendar.getInstance();
         // Set the calendar to the last day of the week
-        derniereDate.add(Calendar.DAY_OF_WEEK, 6);
+        derniereDate.setTime(calendarRequest.getEndDate());
+
+        Calendar dateCourante = Calendar.getInstance();
+        dateCourante.setTime(calendarRequest.getBeginDate());
+        Utilities.resetCalendarTime(dateCourante);
 
         RequestAttributes requestAttributes = new RequestAttributes();
         requestAttributes.setScreen(Utilities.SUPER_SCREEN);
@@ -42,8 +49,8 @@ public class ScheduleService {
         if (!CollectionUtils.isEmpty(horaireDts)) {
             HoraireDt m1 = horaireDts.get(0);
             if (!StringUtils.isEmpty(m1.getErrorCode())) {
-                response.setErrorCode(m1.getErrorCode());
-                response.setErrorMessage(m1.getErrorMessage());
+                response.setError(m1.getErrorCode());
+                response.setMessage(m1.getErrorMessage());
                 return response;
             }
         }
@@ -63,8 +70,8 @@ public class ScheduleService {
         if (!CollectionUtils.isEmpty(travailNocturnes)) {
             TravailNocturne m1 = travailNocturnes.get(0);
             if (!StringUtils.isEmpty(m1.getErrorCode())) {
-                response.setErrorCode(m1.getErrorCode());
-                response.setErrorMessage(m1.getErrorMessage());
+                response.setError(m1.getErrorCode());
+                response.setMessage(m1.getErrorMessage());
                 return response;
             }
         }
@@ -85,30 +92,43 @@ public class ScheduleService {
         if (!CollectionUtils.isEmpty(presences)) {
             Presence p = presences.get(0);
             if (!StringUtils.isEmpty(p.getErrorCode())) {
-                response.setErrorCode(p.getErrorCode());
-                response.setErrorMessage(p.getErrorMessage());
+                response.setError(p.getErrorCode());
+                response.setMessage(p.getErrorMessage());
                 return response;
             }
         }
 
-
+        filterWrapper = new FilterWrapper();
+        filterWrapper.addFilter(new XFilter("gt", "dateDebut", "date", premiereDate.getTime()));
+        filterWrapper.addFilter(new XFilter("lt", "dateFin", "date", derniereDate.getTime()));
+        filterWrapper.addFilter(new XFilter("eq", "codeEmploye", "string", calendarRequest.getCodeEmploye()));
+        requestAttributes.setFilterWrapper(filterWrapper);
+        requestAttributes.setOrderFields(null);
+        List<Taches> taches = proxy.getTaches(requestAttributes);
+        if (!CollectionUtils.isEmpty(taches)) {
+            Taches p = taches.get(0);
+            if (!StringUtils.isEmpty(p.getErrorCode())) {
+                response.setError(p.getErrorCode());
+                response.setMessage(p.getErrorMessage());
+                return response;
+            }
+        }
         List<Date> dates = new ArrayList<>();
         while (derniereDate.after(premiereDate) || derniereDate.equals(premiereDate)) {
             dates.add(Utilities.toDate(Utilities.dateToString(premiereDate.getTime())));
             premiereDate.add(Calendar.DAY_OF_YEAR, 1);
         }
-
-        date:
-        for (int i = 0; i < dates.size(); i++) {
-            Date date = dates.get(i);
+        do {
+            Date date = dateCourante.getTime();
             boolean hasNigth = false;
-            Schedule schedule = null;
-
+            Schedule schedule = new Schedule();
             if (!CollectionUtils.isEmpty(travailNocturnes)) {
                 travail_nocturne:
                 for (TravailNocturne travailNocturne : travailNocturnes) {
                     if (travailNocturne.getDateJour().equals(date)) {
-                        schedule = new Schedule();
+                        schedule.setDateOfDay(date);
+                        schedule.setNightShiftPlanningBeginHour(travailNocturne.getHeureDebut());
+                        schedule.setNightShiftPlanningEndHour(travailNocturne.getHeureFin());
                         schedule.setDateOfDay(travailNocturne.getDateJour());
                         schedule.setBeginHour(travailNocturne.getHeureDebut());
                         schedule.setEndHour(travailNocturne.getHeureFin());
@@ -121,7 +141,8 @@ public class ScheduleService {
                 horaire_dt:
                 for (HoraireDt horaireDt : horaireDts) {
                     int jour = Integer.parseInt(horaireDt.getHoraireDtPk().getJour());
-                    if (jour - 1 == i) {
+                    int dayOfWeek = dateCourante.get(Calendar.DAY_OF_WEEK);
+                    if (jour == dayOfWeek) {
                         schedule = new Schedule();
                         schedule.setDateOfDay(date);
                         schedule.setBeginHour(horaireDt.getHeureDebut());
@@ -132,31 +153,30 @@ public class ScheduleService {
             }
             if (!CollectionUtils.isEmpty(presences)) {
                 for (Presence presence : presences) {
-                    Calendar c = new GregorianCalendar();
-                    c.setTime(presence.getDateJour());
-                    int jour = c.get(Calendar.DAY_OF_WEEK);
-                    if (jour - 1 == i) {
-                        if (schedule == null) {
-                            schedule = new Schedule();
-                        }
+                    if (presence.getDateJour().equals(date)) {
+                        schedule.setDateOfDay(date);
                         schedule.setPresenceDepartureDate(presence.getDateDepart());
                         if (schedule.getPresenceBeginHour() == null) {
                             schedule.setPresenceBeginHour(presence.getHeureArrivee());
                         }
                         schedule.setPresenceEndHour(presence.getHeureDepart());
+                        break;
                     }
                 }
             }
-            if (schedule != null) {
-                List<String> taks = new ArrayList<>();
-                taks.add("Faire la vaiselle " + (i + 1));
-                taks.add("Laver les voitures " + (i + 1));
-                taks.add("Faire bouillir la marmite " + (i + 1));
-                schedule.setTaskList(taks);
-
+            if (!CollectionUtils.isEmpty(taches)) {
+                for (Taches tache : taches) {
+                    if (tache.getDateDebut().equals(date)) {
+                        schedule.setDateOfDay(date);
+                        schedule.addTask(tache.getDescription());
+                    }
+                }
+            }
+            if (schedule.getDateOfDay() != null) {
                 schedules.add(schedule);
             }
-        }
+            dateCourante.add(Calendar.DAY_OF_YEAR, 1);
+        } while (dateCourante.before(derniereDate));
         response.setScheduleList(schedules);
         return response;
     }

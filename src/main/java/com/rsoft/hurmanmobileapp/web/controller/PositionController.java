@@ -17,12 +17,8 @@ public class PositionController {
     @Autowired
     private PositionService positionService;
 
-    @RestController
-    @RequestMapping(value = "/v1/mobile")
-    public class SoldeController {
-        @RequestMapping(value = "/GetEmployeePositions", method = RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-        public GetPositionResponse getPositions(GetPositionRequest getPositionRequest) throws JAXBException {
-            return positionService.getPositionFromService(getPositionRequest);
-        }
+    @RequestMapping(value = "/GetEmployeePositions", method = RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public GetPositionResponse getPositions(GetPositionRequest getPositionRequest) throws JAXBException {
+        return positionService.getPositionFromService(getPositionRequest);
     }
 }

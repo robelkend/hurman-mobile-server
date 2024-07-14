@@ -14,6 +14,9 @@ public class SalaireEmployeMapper {
         position.setDescription(poste+"// "+salaireEmploye.getTypePayroll().getDescription());
         position.setEndDate(salaireEmploye.getPosteEmploye().getDateFin());
         position.setBeginDate(salaireEmploye.getPosteEmploye().getDateDebut());
+        position.setLastPayDate(salaireEmploye.getTypePayroll().getDateDernierPayroll());
+        position.setNextPayDate(salaireEmploye.getTypePayroll().getDatePayrollSuivant());
+        position.setCurrency(salaireEmploye.getTypePayroll().getIdMonnaie());
         position.setSalaryBase("MENSUEL");
         if ("FIXE".equalsIgnoreCase(salaireEmploye.getTypePayroll().getBaseCalculSalaire())) {
             switch (salaireEmploye.getTypePayroll().getPeriodicite()) {

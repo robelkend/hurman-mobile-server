@@ -6,9 +6,9 @@ import java.util.Date;
 
 public class SendMessageRequest extends RequestBase{
     private String codeEmploye;
-    @JsonFormat(pattern="dd/MM/yyyy")
+    @JsonFormat(pattern="MM/dd/yyyy")
     private Date beginDate;
-    @JsonFormat(pattern="dd/MM/yyyy")
+    @JsonFormat(pattern="MM/dd/yyyy")
     private Date endDate;
     private String message;
     private String type;

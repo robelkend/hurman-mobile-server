@@ -19,6 +19,8 @@ public class PretMapper {
         solde.setDisbursementAmount(pret.getMontantPeriode());
         solde.setNextDisbursement(pret.getDatePremierPrelevement());
         solde.setCurrency(pret.getIdMonnaie());
+        solde.setStatus(pret.getStatut());
+        solde.setDisbursementNb(pret.getNbPrevu());
         return solde;
     }
 }

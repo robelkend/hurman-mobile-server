@@ -1,6 +1,7 @@
 package com.rsoft.hurmanmobileapp.dto;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.Date;
 import java.util.List;
 
@@ -10,6 +11,15 @@ public class Pay  {
     private String currencySymbole;
     private BigDecimal baseSalary;
     private BigDecimal overtimeSalary;
+    private BigInteger nbPresences;
+    private BigDecimal overtimeHourSalary;
+    private BigDecimal nbOvertimeHour;
+    private BigDecimal overtimeOffSalary;
+    private BigDecimal nbOvertimeOff;
+    private BigDecimal overtimeNightSalary;
+    private BigDecimal nbOvertimeNight;
+    private BigDecimal overtimeVacationSalary;
+    private BigDecimal nbOvertimeVacation;
     private BigDecimal otherFees;
     private BigDecimal grossSalary;
     private BigDecimal netSalary;
@@ -97,6 +107,78 @@ public class Pay  {
         this.beginDate = beginDate;
     }
 
+    public BigDecimal getOvertimeHourSalary() {
+        return overtimeHourSalary;
+    }
+
+    public void setOvertimeHourSalary(BigDecimal overtimeHourSalary) {
+        this.overtimeHourSalary = overtimeHourSalary;
+    }
+
+    public BigDecimal getNbOvertimeHour() {
+        return nbOvertimeHour;
+    }
+
+    public void setNbOvertimeHour(BigDecimal nbOvertimeHour) {
+        this.nbOvertimeHour = nbOvertimeHour;
+    }
+
+    public BigDecimal getOvertimeOffSalary() {
+        return overtimeOffSalary;
+    }
+
+    public void setOvertimeOffSalary(BigDecimal overtimeOffSalary) {
+        this.overtimeOffSalary = overtimeOffSalary;
+    }
+
+    public BigDecimal getNbOvertimeOff() {
+        return nbOvertimeOff;
+    }
+
+    public void setNbOvertimeOff(BigDecimal nbOvertimeOff) {
+        this.nbOvertimeOff = nbOvertimeOff;
+    }
+
+    public BigDecimal getOvertimeNightSalary() {
+        return overtimeNightSalary;
+    }
+
+    public void setOvertimeNightSalary(BigDecimal overtimeNightSalary) {
+        this.overtimeNightSalary = overtimeNightSalary;
+    }
+
+    public BigDecimal getNbOvertimeNight() {
+        return nbOvertimeNight;
+    }
+
+    public void setNbOvertimeNight(BigDecimal nbOvertimeNight) {
+        this.nbOvertimeNight = nbOvertimeNight;
+    }
+
+    public BigDecimal getOvertimeVacationSalary() {
+        return overtimeVacationSalary;
+    }
+
+    public void setOvertimeVacationSalary(BigDecimal overtimeVacationSalary) {
+        this.overtimeVacationSalary = overtimeVacationSalary;
+    }
+
+    public BigDecimal getNbOvertimeVacation() {
+        return nbOvertimeVacation;
+    }
+
+    public void setNbOvertimeVacation(BigDecimal nbOvertimeVacation) {
+        this.nbOvertimeVacation = nbOvertimeVacation;
+    }
+
+    public BigInteger getNbPresences() {
+        return nbPresences;
+    }
+
+    public void setNbPresences(BigInteger nbPresences) {
+        this.nbPresences = nbPresences;
+    }
+
     public List<Deduction> getDeductionList() {
         return deductionList;
     }
@@ -109,7 +191,8 @@ public class Pay  {
         private String code;
         private BigDecimal amount;
         private BigDecimal balance;
-
+        private BigDecimal employerAmount;
+        private BigDecimal percentage;
         public String getCode() {
             return code;
         }
@@ -132,6 +215,22 @@ public class Pay  {
 
         public void setBalance(BigDecimal balance) {
             this.balance = balance;
+        }
+
+        public BigDecimal getEmployerAmount() {
+            return employerAmount;
+        }
+
+        public void setEmployerAmount(BigDecimal employerAmount) {
+            this.employerAmount = employerAmount;
+        }
+
+        public BigDecimal getPercentage() {
+            return percentage;
+        }
+
+        public void setPercentage(BigDecimal percentage) {
+            this.percentage = percentage;
         }
     }
 }
