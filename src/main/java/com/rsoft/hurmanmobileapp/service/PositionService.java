@@ -32,6 +32,9 @@ public class PositionService {
         FilterWrapper filterWrapper = new FilterWrapper();
         filterWrapper.addFilter(new XFilter("eq", "codeEmploye", "string", getPositionRequest.getCodeEmploye()));
         filterWrapper.addFilter(new XFilter("eq", "actif", "string", "Y"));
+
+
+
         requestAttributes.setFilterWrapper(filterWrapper);
         List<OrderField> orderFields = new ArrayList<>();
         orderFields.add(new OrderField("dateStatut", OrderField.ORDER_DIR_DESC));
@@ -59,10 +62,10 @@ public class PositionService {
                             ra.setScreen(Utilities.SUPER_SCREEN);
                             ra.setAgent(getPositionRequest.getCodeEmploye());
                             filterWrapper = new FilterWrapper();
-                            filterWrapper.addFilter(new XFilter("eq", "codePoste", "string", m.getPosteEmploye().getCodeEmploye()));
-                            requestAttributes.setFilterWrapper(filterWrapper);
+                            filterWrapper.addFilter(new XFilter("eq", "codePoste", "string", m.getPosteEmploye().getCodePoste()));
+                            ra.setFilterWrapper(filterWrapper);
                             List<Poste> poste = proxy.getPostes(ra);
-                            Position position = SalaireEmployeMapper.salaireEmployeToDTO(m, poste.get(0).getDescription());
+                            Position position = SalaireEmployeMapper.salaireEmployeToDTO(m, "Y".equalsIgnoreCase(m.getSalairePrincipal()) ? e.getMntSupplementaire() : null, poste.get(0).getDescription());
                             if ("Y".equalsIgnoreCase(m.getSalairePrincipal())) {
                                 position.setOvertimeRate(e.getMntSupplementaire());
                                 if (e.getJourOff1() != null) {

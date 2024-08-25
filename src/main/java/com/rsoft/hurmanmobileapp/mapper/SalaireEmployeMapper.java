@@ -9,9 +9,9 @@ public class SalaireEmployeMapper {
     private SalaireEmployeMapper() {
     }
 
-    public static Position salaireEmployeToDTO(SalaireEmploye salaireEmploye, String poste) {
+    public static Position salaireEmployeToDTO(SalaireEmploye salaireEmploye, BigDecimal overtime, String poste) {
         Position position = new Position();
-        position.setDescription(poste+"// "+salaireEmploye.getTypePayroll().getDescription());
+        position.setDescription(poste + "// " + salaireEmploye.getTypePayroll().getDescription());
         position.setEndDate(salaireEmploye.getPosteEmploye().getDateFin());
         position.setBeginDate(salaireEmploye.getPosteEmploye().getDateDebut());
         position.setLastPayDate(salaireEmploye.getTypePayroll().getDateDernierPayroll());
@@ -48,7 +48,15 @@ public class SalaireEmployeMapper {
             }
 
         } else if ("JOURNALIER".equalsIgnoreCase(salaireEmploye.getTypePayroll().getBaseCalculSalaire()) || "PIECE".equalsIgnoreCase(salaireEmploye.getTypePayroll().getBaseCalculSalaire()) || "PIECE-FIXE".equalsIgnoreCase(salaireEmploye.getTypePayroll().getBaseCalculSalaire())) {
-            position.setGrossSalary(salaireEmploye.getMontant().multiply(new BigDecimal(30)));
+            if (salaireEmploye.getPosteEmploye().getHoraire().getDefaultNbHovertime() != null && salaireEmploye.getPosteEmploye().getHoraire().getDefaultNbHovertime().doubleValue() > 0) {
+                if (overtime != null) {
+                    position.setGrossSalary(salaireEmploye.getMontant().add(overtime.multiply(salaireEmploye.getPosteEmploye().getHoraire().getDefaultNbHovertime())).multiply(new BigDecimal(30)));
+                } else {
+                    position.setGrossSalary(salaireEmploye.getMontant().multiply(new BigDecimal(30)));
+                }
+            } else {
+                position.setGrossSalary(salaireEmploye.getMontant().multiply(new BigDecimal(30)));
+            }
         } else {
             //Horaire
         }

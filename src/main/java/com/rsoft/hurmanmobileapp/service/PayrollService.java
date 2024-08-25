@@ -37,11 +37,11 @@ public class PayrollService {
         Utilities.toDate(beginDateStr);
         Calendar c =  Calendar.getInstance();
         c.setTime(Utilities.toDate(beginDateStr));
-        c.add(Calendar.MONTH,-3);
         requestAttributes.setField2(Utilities.dateToString(c.getTime()));
 
         YearMonth yearMonth = YearMonth.of(Integer.parseInt(payRequest.getYear()), Integer.parseInt(payRequest.getMonth()));
         LocalDate lastDayOfMonth = yearMonth.atEndOfMonth();
+
         requestAttributes.setField3(lastDayOfMonth.getDayOfMonth() + dateSuffix);
 
         List<PayrollDt> payrollDts = proxy.getPayrollsEmployee(requestAttributes);

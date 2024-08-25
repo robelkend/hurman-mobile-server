@@ -13,7 +13,7 @@ import org.springframework.util.StringUtils;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Calendar;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -62,6 +62,38 @@ public class AlertMessageService {
         return r;
     }
 
+    public SendMessageResponse persistAlert(SendMessageRequest alertMessageRequest) {
+        SendMessageResponse r = new SendMessageResponse();
+        RequestAttributes<AlertMessage> requestAttributes = new RequestAttributes();
+        requestAttributes.setScreen(Utilities.SUPER_SCREEN);
+        requestAttributes.setAgent(alertMessageRequest.getCodeEmploye());
+        //Pas besoin de mettre de date ici, c est   limité  à  3 jours au niveau du serveur et malgré tout on en met, elles ne seront pas prises en compte
+        AlertMessage model = new AlertMessage();
+        model.fireUpdatePendingChanged(true);
+        model.setLineNo(0);
+        model.setSTATUS("INSERT");
+        model.setCodeEmploye(alertMessageRequest.getCodeEmploye());
+        model.setAlertDate(new Date());
+        model.setAgent(alertMessageRequest.getCodeEmploye());
+        model.setDescription("Message de l'employé "+ alertMessageRequest.getCodeEmploye()+" ["+alertMessageRequest.getMessage()+"]");
+        model.setReference("EMPLOYE="+alertMessageRequest.getCodeEmploye());
+        //A remplir
+        //model.setGroupId();
+        ArrayList<AlertMessage> models = new ArrayList();
+        models.add(model);
+        requestAttributes.setModels(models);
+        List<AlertMessage> alertMessages = proxy.persistAlertMessages(requestAttributes);
+        r.setError("000");
+        if (!CollectionUtils.isEmpty(alertMessages)) {
+            AlertMessage m1 = alertMessages.get(0);
+            if (!StringUtils.isEmpty(m1.getErrorCode())) {
+                r.setError(m1.getErrorCode());
+                r.setMessage(m1.getErrorMessage());
+            }
+        }
+        return r;
+    }
+
     public SendMessageResponse addAlertMessages(SendMessageRequest alertMessageRequest) {
         switch (alertMessageRequest.getType()) {
             case "CONGE MALADIE":
@@ -69,6 +101,8 @@ public class AlertMessageService {
             case "CONGE MATERNITE":
             case "CONGE ANNUEL":
                 return persistVacation(alertMessageRequest);
+            case "AUTRE":
+                return persistAlert(alertMessageRequest);
             case "RETARD":
             case "ABSENCE":
             default:

@@ -22,7 +22,7 @@ import java.util.List;
 @FeignClient(name = "api-gateway-server", configuration = FeignSimpleEncoderConfig.class, url = "${api.gateway.url}")
 public abstract interface DefaultProxy {
 
-    @RequestMapping(value = "/hurman-server/PersistAlertMessages", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/hurman-server/PersistMobileAlertMessages", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @Headers({
             "Accept: application/json",
             "Content-Type: application/json"
