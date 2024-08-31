@@ -72,6 +72,7 @@ public class AlertMessageService {
         model.fireUpdatePendingChanged(true);
         model.setLineNo(0);
         model.setSTATUS("INSERT");
+        model.setSource("MOBILE");
         model.setCodeEmploye(alertMessageRequest.getCodeEmploye());
         model.setAlertDate(new Date());
         model.setAgent(alertMessageRequest.getCodeEmploye());
@@ -117,6 +118,7 @@ public class AlertMessageService {
                 //m.setCodeEmploye(alertMessageRequest.getCodeEmploye());
                 m.setAgent(alertMessageRequest.getCodeEmploye());
                 m.setAlertDate(new Date());
+                m.setSource("MOBILE");
                 m.setSTATUS(Utilities.STATUS_INSERT);
                 ArrayList<AlertMessage> messages = new ArrayList<>();
                 messages.add(m);
