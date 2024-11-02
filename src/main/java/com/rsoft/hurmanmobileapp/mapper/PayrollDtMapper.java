@@ -15,6 +15,7 @@ import java.util.List;
 public class PayrollDtMapper {
     private PayrollDtMapper() {
     }
+
     public static Pay payrollDtToDTO(PayrollDt payrollDt) {
         Pay pay = null;
         if (payrollDt != null) {
@@ -26,7 +27,11 @@ public class PayrollDtMapper {
             pay.setOvertimeSalary(payrollDt.getSalaireSupplementaire());
             pay.setOtherFees(payrollDt.getMontantAutreRevenu().add(payrollDt.getMontantFrais()));
             pay.setGrossSalary(getMontantBrut(payrollDt));
+            pay.setAbsenceAmount(payrollDt.getMontantAbsence());
+            pay.setLateAmount(payrollDt.getMontantRetard());
+            pay.setSanctionAmount(payrollDt.getMontantSanction());
             pay.setNetSalary(payrollDt.getSalaireNet());
+            pay.setTotalTaxAmount(payrollDt.getTotalPrelevement().add(payrollDt.getMontantSanction()).add(payrollDt.getMontantRetard()).add(payrollDt.getMontantAbsence()).add(payrollDt.getMontantDepenseEmploye()));
             pay.setNbPresences(payrollDt.getNbPresences());
             pay.setOvertimeVacationSalary(payrollDt.getCongeSupplementaire());
             pay.setNbOvertimeVacation(payrollDt.getNbCongeSupplementaire());
@@ -45,14 +50,40 @@ public class PayrollDtMapper {
             c2.setTime(payrollDt.getPayroll().getDateDebut());
             Utilities.resetCalendarTime(c2);
             pay.setBeginDate(c2.getTime());
+            List<Pay.Deduction> deductionList = new ArrayList<>();
             if (!CollectionUtils.isEmpty(payrollDt.getPayrollDeductions())) {
-                List<Pay.Deduction> deductionList = new ArrayList<>();
                 for (PayrollDeduction pd : payrollDt.getPayrollDeductions()) {
                     Pay.Deduction deduction = payrollDeductionToDTO(pd);
                     if (deduction != null) {
                         deductionList.add(deduction);
                     }
                 }
+            }
+            if (payrollDt.getMontantRetard() != null && payrollDt.getMontantRetard().doubleValue() > 0) {
+                Pay.Deduction d = new Pay.Deduction();
+                d.setCode("late");
+                d.setAmount(payrollDt.getMontantRetard());
+                deductionList.add(d);
+            }
+            if (payrollDt.getMontantAbsence() != null && payrollDt.getMontantAbsence().doubleValue() > 0) {
+                Pay.Deduction d = new Pay.Deduction();
+                d.setCode("absence");
+                d.setAmount(payrollDt.getMontantAbsence());
+                deductionList.add(d);
+            }
+            if (payrollDt.getMontantSanction() != null && payrollDt.getMontantSanction().doubleValue() > 0) {
+                Pay.Deduction d = new Pay.Deduction();
+                d.setCode("sanction");
+                d.setAmount(payrollDt.getMontantSanction());
+                deductionList.add(d);
+            }
+            if (payrollDt.getMontantDepenseEmploye() != null && payrollDt.getMontantDepenseEmploye().doubleValue() > 0) {
+                Pay.Deduction d = new Pay.Deduction();
+                d.setCode("Refund");
+                d.setAmount(payrollDt.getMontantDepenseEmploye());
+                deductionList.add(d);
+            }
+            if (!CollectionUtils.isEmpty(deductionList)) {
                 pay.setDeductionList(deductionList);
             }
         }
@@ -89,18 +120,6 @@ public class PayrollDtMapper {
         }
         if (payrollDt.getMontantCommission() != null) {
             salaireNet = salaireNet.add(payrollDt.getMontantCommission());
-        }
-        if (payrollDt.getMontantDepenseEmploye() != null) {
-            salaireNet = salaireNet.subtract(payrollDt.getMontantDepenseEmploye());
-        }
-        if (payrollDt.getMontantSanction() != null) {
-            salaireNet = salaireNet.subtract(payrollDt.getMontantSanction());
-        }
-        if (payrollDt.getMontantAbsence() != null) {
-            salaireNet = salaireNet.subtract(payrollDt.getMontantAbsence());
-        }
-        if (payrollDt.getMontantRetard() != null) {
-            salaireNet = salaireNet.subtract(payrollDt.getMontantRetard());
         }
         return salaireNet;
     }

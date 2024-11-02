@@ -11,6 +11,10 @@ public class Pay  {
     private String currencySymbole;
     private BigDecimal baseSalary;
     private BigDecimal overtimeSalary;
+    private BigDecimal absenceAmount;
+    private BigDecimal lateAmount;
+    private BigDecimal sanctionAmount;
+    private BigDecimal totalTaxAmount;
     private BigInteger nbPresences;
     private BigDecimal overtimeHourSalary;
     private BigDecimal nbOvertimeHour;
@@ -65,6 +69,38 @@ public class Pay  {
 
     public void setOvertimeSalary(BigDecimal overtimeSalary) {
         this.overtimeSalary = overtimeSalary;
+    }
+
+    public BigDecimal getAbsenceAmount() {
+        return absenceAmount;
+    }
+
+    public void setAbsenceAmount(BigDecimal absenceAmount) {
+        this.absenceAmount = absenceAmount;
+    }
+
+    public BigDecimal getLateAmount() {
+        return lateAmount;
+    }
+
+    public void setLateAmount(BigDecimal lateAmount) {
+        this.lateAmount = lateAmount;
+    }
+
+    public BigDecimal getSanctionAmount() {
+        return sanctionAmount;
+    }
+
+    public void setSanctionAmount(BigDecimal sanctionAmount) {
+        this.sanctionAmount = sanctionAmount;
+    }
+
+    public BigDecimal getTotalTaxAmount() {
+        return totalTaxAmount;
+    }
+
+    public void setTotalTaxAmount(BigDecimal totalTaxAmount) {
+        this.totalTaxAmount = totalTaxAmount;
     }
 
     public BigDecimal getOtherFees() {
